@@ -1,0 +1,17 @@
+[
+  {
+    "label": "GET /teacher-positions",
+    "method": "GET",
+    "path": "/teacher-positions"
+  },
+  {
+    "label": "POST /teacher-positions",
+    "method": "POST",
+    "path": "/teacher-positions",
+    "body": {
+      "name": "Mathematics Teacher",
+      "code": "MATH101",
+      "description": "Teaching mathematics to students"
+    }
+  }
+]

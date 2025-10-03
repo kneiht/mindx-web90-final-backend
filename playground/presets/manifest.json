@@ -1,8 +1,8 @@
 [
   { "name": "Auth", "file": "auth.json" },
   { "name": "Images", "file": "images.json" },
-  { "name": "Post Success", "file": "posts-success.json" },
-  { "name": "Post Error", "file": "posts-error.json" },
   { "name": "User Success", "file": "users-success.json" },
-  { "name": "User Error", "file": "users-error.json" }
+  { "name": "User Error", "file": "users-error.json" },
+  { "name": "Teachers", "file": "teachers-success.json" },
+  { "name": "Teacher Positions", "file": "teacher-positions-success.json" }
 ]
