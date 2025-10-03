@@ -56,7 +56,7 @@ export class RegisterUseCase implements IUseCase<RegisterUseCaseDto> {
         id: user.id,
         email: user.email,
         name: user.name ?? undefined,
-        role: user.role ?? Role.USER,
+        role: user.role ?? Role.STUDENT,
       };
 
       // Sign tokens

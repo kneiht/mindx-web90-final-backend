@@ -1,4 +1,5 @@
 import {
+  IsBoolean,
   IsDate,
   IsEmail,
   IsEnum,
@@ -18,7 +19,8 @@ import { validateOrThrow } from '@/shared/validator';
 import { env } from '@/config/environment';
 
 export enum Role {
-  USER = 'USER',
+  STUDENT = 'STUDENT',
+  TEACHER = 'TEACHER',
   ADMIN = 'ADMIN',
 }
 
@@ -37,6 +39,22 @@ export class CreateUserDto {
   @IsNotEmpty()
   @MinLength(6)
   password: string;
+
+  @IsOptional()
+  @IsString()
+  phoneNumber?: string;
+
+  @IsOptional()
+  @IsString()
+  address?: string;
+
+  @IsOptional()
+  @IsString()
+  identity?: string;
+
+  @IsOptional()
+  @IsDate()
+  dob?: Date;
 
   @IsOptional()
   @IsEnum(Role)
@@ -59,6 +77,25 @@ export class HydrateUserDto {
   @IsNotEmpty()
   hashedPassword: string;
 
+  @IsOptional()
+  @IsString()
+  phoneNumber?: string;
+
+  @IsOptional()
+  @IsString()
+  address?: string;
+
+  @IsOptional()
+  @IsString()
+  identity?: string;
+
+  @IsOptional()
+  @IsDate()
+  dob?: Date;
+
+  @IsBoolean()
+  isDeleted: boolean;
+
   @IsEnum(Role)
   role: Role;
 
@@ -79,6 +116,26 @@ export class UpdateUserDto {
   name?: string;
 
   @IsOptional()
+  @IsString()
+  phoneNumber?: string;
+
+  @IsOptional()
+  @IsString()
+  address?: string;
+
+  @IsOptional()
+  @IsString()
+  identity?: string;
+
+  @IsOptional()
+  @IsDate()
+  dob?: Date;
+
+  @IsOptional()
+  @IsBoolean()
+  isDeleted?: boolean;
+
+  @IsOptional()
   @IsEnum(Role)
   role?: Role;
 }
@@ -95,6 +152,25 @@ export class User extends BaseEntity {
   @IsNotEmpty()
   public email: string;
 
+  @IsOptional()
+  @IsString()
+  public phoneNumber: string | null;
+
+  @IsOptional()
+  @IsString()
+  public address: string | null;
+
+  @IsOptional()
+  @IsString()
+  public identity: string | null;
+
+  @IsOptional()
+  @IsDate()
+  public dob: Date | null;
+
+  @IsBoolean()
+  public isDeleted: boolean;
+
   @IsEnum(Role)
   public role: Role;
 
@@ -106,11 +182,17 @@ export class User extends BaseEntity {
       email: string;
       hashedPassword: string;
       role: Role;
+      isDeleted: boolean;
     },
   ) {
     super(props);
     this.name = props.name ?? null;
     this.email = props.email;
+    this.phoneNumber = props.phoneNumber ?? null;
+    this.address = props.address ?? null;
+    this.identity = props.identity ?? null;
+    this.dob = props.dob ?? null;
+    this.isDeleted = props.isDeleted;
     this.hashedPassword = props.hashedPassword;
     this.role = props.role;
   }
@@ -134,7 +216,8 @@ export class User extends BaseEntity {
         props.password,
         Number(env.BCRYPT_ROUNDS),
       ),
-      role: props.role ?? Role.USER,
+      isDeleted: false,
+      role: props.role ?? Role.STUDENT,
     };
     return new User(userProps);
   }
@@ -156,6 +239,11 @@ export class User extends BaseEntity {
       id: this.id,
       name: this.name,
       email: this.email,
+      phoneNumber: this.phoneNumber,
+      address: this.address,
+      identity: this.identity,
+      dob: this.dob,
+      isDeleted: this.isDeleted,
       role: this.role,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,

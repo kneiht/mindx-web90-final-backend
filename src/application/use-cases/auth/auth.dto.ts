@@ -25,7 +25,7 @@ export class RegisterUseCaseDto {
 
   @IsOptional()
   @IsEnum(Role)
-  role?: Role = Role.USER;
+  role?: Role = Role.STUDENT;
 }
 
 export class LoginUseCaseDto {
@@ -46,7 +46,7 @@ export class CheckAuthUseCaseDto {
 
   @IsOptional()
   @IsEnum(Role)
-  roleToCheck?: Role = Role.USER;
+  roleToCheck?: Role = Role.STUDENT;
 }
 
 // Define response data for register use case

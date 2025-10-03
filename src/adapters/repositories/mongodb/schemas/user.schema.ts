@@ -21,14 +21,35 @@ const userSchema = new mongoose.Schema<
     unique: true,
     lowercase: true,
   },
+  phoneNumber: {
+    type: String,
+    required: false,
+  },
+  address: {
+    type: String,
+    required: false,
+  },
+  identity: {
+    type: String,
+    required: false,
+  },
+  dob: {
+    type: Date,
+    required: false,
+  },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
   hashedPassword: {
     type: String,
     required: true,
   },
   role: {
     type: String,
-    enum: ['ADMIN', 'USER'],
-    default: 'user',
+    enum: ['STUDENT', 'TEACHER', 'ADMIN'],
+    default: 'STUDENT',
     required: true,
   },
   createdAt: {
