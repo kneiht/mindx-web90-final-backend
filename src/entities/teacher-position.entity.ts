@@ -29,6 +29,10 @@ export class CreateTeacherPositionDto {
   @IsOptional()
   @IsString()
   description?: string;
+
+  @IsOptional()
+  @IsBoolean()
+  isActive?: boolean;
 }
 
 // Define HydrateTeacherPositionDto
@@ -114,7 +118,7 @@ export class TeacherPosition extends BaseEntity {
     props: Partial<TeacherPosition> & {
       name: string;
       code: string;
-      isActive: boolean;
+      isActive?: boolean;
       isDeleted: boolean;
     },
   ) {
@@ -122,7 +126,7 @@ export class TeacherPosition extends BaseEntity {
     this.name = props.name;
     this.code = props.code;
     this.description = props.description;
-    this.isActive = props.isActive;
+    this.isActive = props.isActive ?? true;
     this.isDeleted = props.isDeleted;
   }
 
@@ -142,7 +146,7 @@ export class TeacherPosition extends BaseEntity {
     );
     const positionProps = {
       ...props,
-      isActive: true,
+      isActive: props.isActive ?? true,
       isDeleted: false,
     };
     return new TeacherPosition(positionProps);
