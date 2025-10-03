@@ -48,8 +48,8 @@ const userSchema = new mongoose.Schema<
   },
   role: {
     type: String,
-    enum: ['STUDENT', 'TEACHER', 'ADMIN'],
-    default: 'STUDENT',
+    enum: ['STUDENT', 'TEACHER', 'ADMIN', 'SUPER_ADMIN'],
+    default: 'ADMIN',
     required: true,
   },
   createdAt: {

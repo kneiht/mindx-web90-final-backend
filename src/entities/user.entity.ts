@@ -22,6 +22,7 @@ export enum Role {
   STUDENT = 'STUDENT',
   TEACHER = 'TEACHER',
   ADMIN = 'ADMIN',
+  SUPER_ADMIN = 'SUPER_ADMIN',
 }
 
 // Define CreateUserDto
@@ -217,7 +218,7 @@ export class User extends BaseEntity {
         Number(env.BCRYPT_ROUNDS),
       ),
       isDeleted: false,
-      role: props.role ?? Role.STUDENT,
+      role: props.role ?? Role.ADMIN,
     };
     return new User(userProps);
   }
