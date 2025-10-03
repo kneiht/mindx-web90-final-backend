@@ -45,4 +45,15 @@ userSchema.virtual('id').get(function () {
   return this._id.toString();
 });
 
+// Ensure virtual fields are serialised.
+userSchema.set('toJSON', {
+  virtuals: true,
+  transform: function (doc, ret) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    delete (ret as any)._id;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    delete (ret as any).__v;
+  },
+});
+
 export const UserModel = mongoose.model('users', userSchema);

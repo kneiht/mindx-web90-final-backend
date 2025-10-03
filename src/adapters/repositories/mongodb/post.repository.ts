@@ -10,18 +10,4 @@ export class PostMongoRepository
   constructor() {
     super(PostModel);
   }
-
-  async add(post: Post): Promise<Post> {
-    const postData = {
-      _id: post.id,
-      ...post,
-    };
-    await PostModel.create(postData);
-    return post;
-  }
-
-  async update(post: Post): Promise<Post> {
-    await PostModel.findByIdAndUpdate(post.id, post).exec();
-    return post;
-  }
 }

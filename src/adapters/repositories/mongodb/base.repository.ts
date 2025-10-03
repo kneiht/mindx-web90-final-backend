@@ -1,4 +1,3 @@
- 
 import { Model } from 'mongoose';
 import { IBaseRepository } from '@/application/repositories';
 
@@ -9,6 +8,7 @@ export abstract class MongoRepository<TEntity extends { id: string }>
 
   async findById(id: string): Promise<TEntity | null> {
     const doc = await this.model.findById(id).exec();
+    if (!doc) return null;
     return doc as TEntity;
   }
 
@@ -18,8 +18,9 @@ export abstract class MongoRepository<TEntity extends { id: string }>
   }
 
   async add(entity: TEntity): Promise<TEntity> {
-    // Mongoose's create can often take a plain object representation of the entity
-    await this.model.create(entity);
+    console.log(entity);
+    const doc = { ...entity, _id: entity.id };
+    await this.model.create(doc);
     return entity;
   }
 

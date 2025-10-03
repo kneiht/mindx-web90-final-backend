@@ -51,10 +51,8 @@ if (env.JWT_SECRET.length < 32) {
 console.log('🔧 Environment Configuration Report:');
 console.log(`     - NODE_ENV: ${env.NODE_ENV}`);
 console.log(`     - PORT: ${env.PORT}`);
-console.log(
-  `     - DATABASE_URL: ${env.DATABASE_URL ? '✅ Set' : '❌ Missing'}`,
-);
-console.log(`     - JWT_SECRET: ${env.JWT_SECRET ? '✅ Set' : '❌ Missing'}`);
+console.log(`     - DATABASE_URL: ${env.DATABASE_URL ? 'Set' : 'Missing'}`);
+console.log(`     - JWT_SECRET: ${env.JWT_SECRET ? 'Set' : 'Missing'}`);
 console.log(`     - JWT_ACCESS_EXPIRES_IN: ${env.JWT_ACCESS_EXPIRES_IN}`);
 console.log(`     - JWT_REFRESH_EXPIRES_IN: ${env.JWT_REFRESH_EXPIRES_IN}`);
 console.log(`     - BCRYPT_ROUNDS: ${env.BCRYPT_ROUNDS}`);
