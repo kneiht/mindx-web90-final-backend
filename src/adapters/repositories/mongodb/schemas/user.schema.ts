@@ -66,6 +66,9 @@ userSchema.virtual('id').get(function () {
   return this._id.toString();
 });
 
+// Indexes
+userSchema.index({ email: 1 }, { unique: true });
+
 // Ensure virtual fields are serialised.
 userSchema.set('toJSON', {
   virtuals: true,
