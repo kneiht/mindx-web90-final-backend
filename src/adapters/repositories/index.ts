@@ -9,6 +9,8 @@ import {
   UserMongoRepository,
   PostMongoRepository,
   ImageMongoRepository,
+  TeacherMongoRepository,
+  TeacherPositionMongoRepository,
 } from './mongodb';
 
 const userRepoMap = {
@@ -26,6 +28,14 @@ const imageRepoMap = {
   MONGODB: ImageMongoRepository,
 } as const;
 
+const teacherRepoMap = {
+  MONGODB: TeacherMongoRepository,
+} as const;
+
+const teacherPositionRepoMap = {
+  MONGODB: TeacherPositionMongoRepository,
+} as const;
+
 // Get the types of the keys the bypass ts errors
 type DB_TYPES = keyof typeof userRepoMap;
 
@@ -34,3 +44,5 @@ const DB_SELECT: DB_TYPES = (env.DB_SELECT || 'IN_MEMORY') as DB_TYPES;
 export const UserRepository = userRepoMap[DB_SELECT];
 export const PostRepository = postRepoMap[DB_SELECT];
 export const ImageRepository = imageRepoMap[DB_SELECT];
+export const TeacherRepository = teacherRepoMap['MONGODB'];
+export const TeacherPositionRepository = teacherPositionRepoMap['MONGODB'];

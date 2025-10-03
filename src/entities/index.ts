@@ -4,3 +4,5 @@ export * from './base.entity';
 export * from './post.entity';
 export * from './user.entity';
 export * from './image.entity';
+export * from './teacher.entity';
+export * from './teacher-position.entity';
