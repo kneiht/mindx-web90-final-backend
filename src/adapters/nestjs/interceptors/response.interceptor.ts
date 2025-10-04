@@ -70,8 +70,7 @@ export class UseCaseResponseInterceptor<T>
           }
         }
 
-        const { type: _type, ...rest } = response;
-        return rest;
+        return response;
       }),
     );
   }
