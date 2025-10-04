@@ -1,4 +1,11 @@
-import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import {
   GetTeacherPositionsUseCase,
   AddTeacherPositionUseCase,
@@ -7,6 +14,7 @@ import { CreateTeacherPositionDto } from '@/entities';
 import { JwtAuthGuard, RolesGuard } from '../auth/auth.guard';
 import { Role } from '@/entities';
 import { Roles } from '../auth/roles.decorator';
+import { UserInRequest } from '../auth/auth.dto';
 
 @Controller('teacher-positions')
 export class TeacherPositionsController {
@@ -18,14 +26,18 @@ export class TeacherPositionsController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
   @Get()
-  async getAll() {
-    return await this.getTeacherPositionsUseCase.execute();
+  async getAll(@Request() req: { user: UserInRequest }) {
+    return await this.getTeacherPositionsUseCase.execute(req.user.id);
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
   @Post()
-  async add(@Body() dto: CreateTeacherPositionDto) {
-    return await this.addTeacherPositionUseCase.execute(dto);
+  async add(
+    @Body() dto: CreateTeacherPositionDto,
+    @Request() req: { user: UserInRequest },
+  ) {
+    const positionDto = { ...dto, orgUserId: req.user.id };
+    return await this.addTeacherPositionUseCase.execute(positionDto);
   }
 }

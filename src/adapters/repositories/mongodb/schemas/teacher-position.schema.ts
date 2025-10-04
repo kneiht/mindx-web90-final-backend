@@ -33,6 +33,11 @@ const teacherPositionSchema = new mongoose.Schema<
     default: false,
     required: true,
   },
+  orgUserId: {
+    type: String,
+    required: true,
+    ref: 'users',
+  },
   createdAt: {
     type: Date,
     required: true,

@@ -33,6 +33,10 @@ export class CreateTeacherPositionDto {
   @IsOptional()
   @IsBoolean()
   isActive?: boolean;
+
+  @IsUUID()
+  @IsNotEmpty()
+  orgUserId: string;
 }
 
 // Define HydrateTeacherPositionDto
@@ -57,6 +61,9 @@ export class HydrateTeacherPositionDto {
 
   @IsBoolean()
   isDeleted: boolean;
+
+  @IsUUID()
+  orgUserId: string;
 
   @IsDate()
   createdAt: Date;
@@ -91,6 +98,10 @@ export class UpdateTeacherPositionDto {
   @IsOptional()
   @IsBoolean()
   isDeleted?: boolean;
+
+  @IsOptional()
+  @IsUUID()
+  orgUserId?: string;
 }
 
 // Define TeacherPosition
@@ -113,6 +124,9 @@ export class TeacherPosition extends BaseEntity {
   @IsBoolean()
   public isDeleted: boolean;
 
+  @IsUUID()
+  public orgUserId: string;
+
   // Constructor
   protected constructor(
     props: Partial<TeacherPosition> & {
@@ -120,6 +134,7 @@ export class TeacherPosition extends BaseEntity {
       code: string;
       isActive?: boolean;
       isDeleted: boolean;
+      orgUserId: string;
     },
   ) {
     super(props);
@@ -128,6 +143,7 @@ export class TeacherPosition extends BaseEntity {
     this.description = props.description;
     this.isActive = props.isActive ?? true;
     this.isDeleted = props.isDeleted;
+    this.orgUserId = props.orgUserId;
   }
 
   // Validate
@@ -173,6 +189,7 @@ export class TeacherPosition extends BaseEntity {
       description: this.description,
       isActive: this.isActive,
       isDeleted: this.isDeleted,
+      orgUserId: this.orgUserId,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     };

@@ -24,6 +24,7 @@ export class TeacherPositionMongoRepository
       description: doc.description,
       isActive: doc.isActive,
       isDeleted: doc.isDeleted,
+      orgUserId: doc.orgUserId,
       createdAt: doc.createdAt,
       updatedAt: doc.updatedAt,
     };
@@ -41,6 +42,7 @@ export class TeacherPositionMongoRepository
         description: doc.description,
         isActive: doc.isActive,
         isDeleted: doc.isDeleted,
+        orgUserId: doc.orgUserId,
         createdAt: doc.createdAt,
         updatedAt: doc.updatedAt,
       };
@@ -59,6 +61,7 @@ export class TeacherPositionMongoRepository
       description: position.description,
       isActive: position.isActive,
       isDeleted: position.isDeleted,
+      orgUserId: position.orgUserId,
       createdAt: position.createdAt,
       updatedAt: position.updatedAt,
     };
@@ -73,6 +76,7 @@ export class TeacherPositionMongoRepository
       description: position.description,
       isActive: position.isActive,
       isDeleted: position.isDeleted,
+      orgUserId: position.orgUserId,
       updatedAt: position.updatedAt,
     }).exec();
     return position;
