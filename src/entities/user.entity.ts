@@ -171,6 +171,7 @@ export class User extends BaseEntity {
 
   @IsOptional()
   @IsDate()
+  @Type(() => Date)
   public dob: Date | null;
 
   @IsBoolean()
