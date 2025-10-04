@@ -54,7 +54,7 @@ const teacherSchema = new mongoose.Schema<
     required: true,
     unique: true,
     minlength: 10,
-    maxlength: 10,
+    maxlength: 20,
   },
   startDate: {
     type: Date,
