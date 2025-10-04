@@ -1,30 +1,6 @@
 import { Teacher } from '@/entities';
 import mongoose from 'mongoose';
 
-// Define the degree schema
-const degreeSchema = new mongoose.Schema({
-  type: {
-    type: String,
-    required: true,
-  },
-  school: {
-    type: String,
-    required: true,
-  },
-  major: {
-    type: String,
-    required: true,
-  },
-  year: {
-    type: Number,
-    required: true,
-  },
-  isGraduated: {
-    type: Boolean,
-    required: true,
-  },
-});
-
 // Define the Teacher schema for MongoDB
 const teacherSchema = new mongoose.Schema<
   Omit<Teacher, 'id' | 'userId' | 'orgUserId' | 'teacherPositions'> & {
@@ -76,7 +52,7 @@ const teacherSchema = new mongoose.Schema<
       required: true,
     },
   ],
-  degrees: [degreeSchema],
+  degrees: [{}],
   createdAt: {
     type: Date,
     required: true,
