@@ -47,16 +47,6 @@ export class AddTeacherUseCase implements IUseCase<CreateTeacherDto> {
         return failureConflict('Teacher already exists for this user');
       }
 
-      // Check if code is provided and unique
-      if (input.code) {
-        const existingByCode = await this.teacherRepository.findByCode(
-          input.code,
-        );
-        if (existingByCode) {
-          return failureConflict('Teacher with this code already exists');
-        }
-      }
-
       const teacher = await Teacher.create(input);
 
       // Add to Repository
