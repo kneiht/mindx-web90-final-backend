@@ -11,7 +11,7 @@ export class GetTeacherPositionsUseCase implements IUseCase<string> {
     try {
       const positions = await this.teacherPositionRepository.findAll();
       const filteredPositions = positions.filter(
-        (p) => p.orgUserId === orgUserId,
+        (p) => p.orgUserId && p.orgUserId === orgUserId,
       );
       return successOk(filteredPositions);
     } catch (error) {

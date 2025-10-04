@@ -35,7 +35,7 @@ const teacherPositionSchema = new mongoose.Schema<
   },
   orgUserId: {
     type: String,
-    required: true,
+    required: false,
     ref: 'users',
   },
   createdAt: {

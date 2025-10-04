@@ -24,7 +24,7 @@ export class TeacherPositionMongoRepository
       description: doc.description,
       isActive: doc.isActive,
       isDeleted: doc.isDeleted,
-      orgUserId: doc.orgUserId,
+      orgUserId: doc.orgUserId || undefined,
       createdAt: doc.createdAt,
       updatedAt: doc.updatedAt,
     };
