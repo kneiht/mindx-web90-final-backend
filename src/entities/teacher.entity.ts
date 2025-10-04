@@ -9,6 +9,7 @@ import {
   IsUUID,
   MinLength,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 import { BaseEntity } from './base.entity';
 import {
   EntityInputValidationError,
@@ -54,6 +55,7 @@ export class CreateTeacherDto {
 
   @IsOptional()
   @IsDate()
+  @Type(() => Date)
   startDate?: Date;
 
   @IsOptional()
@@ -90,6 +92,7 @@ export class HydrateTeacherDto {
 
   @IsOptional()
   @IsDate()
+  @Type(() => Date)
   startDate?: Date;
 
   @IsOptional()
@@ -126,6 +129,7 @@ export class UpdateTeacherDto {
 
   @IsOptional()
   @IsDate()
+  @Type(() => Date)
   startDate?: Date;
 
   @IsOptional()
