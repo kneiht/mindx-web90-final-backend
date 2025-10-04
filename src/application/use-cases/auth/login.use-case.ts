@@ -7,7 +7,7 @@ import { IUserRepository } from '@/application/repositories';
 
 import {
   failureInternal,
-  failureUnauthorized,
+  failureValidation,
   successOk,
   UseCaseReponse,
 } from '../response';
@@ -36,19 +36,19 @@ export class LoginUseCase implements IUseCase<LoginUseCaseDto> {
         LoginUseCaseDto,
       );
       if (!ok) {
-        return failureUnauthorized('Input validation failed', message);
+        return failureValidation('Input validation failed', message);
       }
 
       // Find user by email
       const user = await this.userRepository.findByEmail(input.email);
       if (!user) {
-        return failureUnauthorized('Invalid email or password');
+        return failureValidation('Invalid email or password');
       }
 
       // Verify password
       const isPasswordValid = user.verifyPassword(input.password);
       if (!isPasswordValid) {
-        return failureUnauthorized('Invalid email or password');
+        return failureValidation('Invalid email or password');
       }
 
       // Create JWT payload

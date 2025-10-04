@@ -7,7 +7,7 @@ import { RegisterUseCaseData, RegisterUseCaseDto } from './auth.dto';
 
 import {
   failureInternal,
-  failureUnauthorized,
+  failureValidation,
   successCreated,
   UseCaseReponse,
 } from '../response';
@@ -36,7 +36,7 @@ export class RegisterUseCase implements IUseCase<RegisterUseCaseDto> {
         RegisterUseCaseDto,
       );
       if (!ok) {
-        return failureUnauthorized('Input validation failed', message);
+        return failureValidation('Input validation failed', message);
       }
 
       // Use AddUserUseCase to create the user
