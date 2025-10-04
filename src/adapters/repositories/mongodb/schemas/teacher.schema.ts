@@ -27,9 +27,10 @@ const degreeSchema = new mongoose.Schema({
 
 // Define the Teacher schema for MongoDB
 const teacherSchema = new mongoose.Schema<
-  Omit<Teacher, 'id' | 'userId' | 'teacherPositions'> & {
+  Omit<Teacher, 'id' | 'userId' | 'orgUserId' | 'teacherPositions'> & {
     _id: string;
     userId: string;
+    orgUserId: string;
     teacherPositions: string[];
   }
 >({
@@ -37,6 +38,11 @@ const teacherSchema = new mongoose.Schema<
   userId: {
     type: String,
     required: true,
+    ref: 'users',
+  },
+  orgUserId: {
+    type: String,
+    required: false,
     ref: 'users',
   },
   isActive: {

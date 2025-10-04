@@ -1,13 +1,13 @@
-import { Teacher, CreateTeacherDto } from '@/entities';
+import { Teacher, CreateTeacherDto, Role } from '@/entities';
 import {
   ITeacherRepository,
   IUserRepository,
 } from '@/application/repositories';
 import { IUseCase } from '..';
+import { AddUserUseCase } from '../user/add-user.use-case';
 import {
   failureConflict,
   failureInternal,
-  failureNotFound,
   failureValidation,
   successCreated,
   UseCaseReponse,
@@ -20,6 +20,7 @@ export class AddTeacherUseCase implements IUseCase<CreateTeacherDto> {
   constructor(
     private teacherRepository: ITeacherRepository,
     private userRepository: IUserRepository,
+    private addUserUseCase: AddUserUseCase,
   ) {}
 
   async execute(input: CreateTeacherDto): Promise<UseCaseReponse<Teacher>> {
@@ -33,21 +34,38 @@ export class AddTeacherUseCase implements IUseCase<CreateTeacherDto> {
         return failureValidation('Input validation failed', message);
       }
 
-      // Check if user exists
-      const user = await this.userRepository.findById(input.userId);
-      if (!user) {
-        return failureNotFound('User not found');
+      // Check if user with email already exists
+      const existingUser = await this.userRepository.findByEmail(input.email);
+      if (existingUser) {
+        return failureConflict('User with this email already exists');
       }
+
+      // Create user
+      const createUserDto = {
+        name: input.name,
+        email: input.email,
+        password: '123456',
+        phoneNumber: input.phoneNumber,
+        address: input.address,
+        identity: input.identity,
+        dob: input.dob,
+        role: Role.TEACHER,
+      };
+      const userResponse = await this.addUserUseCase.execute(createUserDto);
+      if (!userResponse.success || !userResponse.data) {
+        return failureValidation('Failed to create user', userResponse.error);
+      }
+      const user = userResponse.data;
 
       // Check if teacher already exists for this user
       const existingTeacher = await this.teacherRepository.findByUserId(
-        input.userId,
+        user.id,
       );
       if (existingTeacher) {
         return failureConflict('Teacher already exists for this user');
       }
 
-      const teacher = await Teacher.create(input);
+      const teacher = await Teacher.create({ ...input, userId: user.id });
 
       // Add to Repository
       const newTeacher = await this.teacherRepository.add(teacher);

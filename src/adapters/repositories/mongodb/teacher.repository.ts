@@ -17,6 +17,7 @@ export class TeacherMongoRepository
     const hydrateDto: HydrateTeacherDto = {
       id: doc._id.toString(),
       userId: doc.userId,
+      orgUserId: doc.orgUserId || undefined,
       isActive: doc.isActive,
       isDeleted: doc.isDeleted,
       code: doc.code,
@@ -36,6 +37,7 @@ export class TeacherMongoRepository
     const hydrateDto: HydrateTeacherDto = {
       id: doc._id.toString(),
       userId: doc.userId,
+      orgUserId: doc.orgUserId || undefined,
       isActive: doc.isActive,
       isDeleted: doc.isDeleted,
       code: doc.code,
@@ -56,6 +58,7 @@ export class TeacherMongoRepository
       const hydrateDto: HydrateTeacherDto = {
         id: doc._id.toString(),
         userId: doc.userId,
+        orgUserId: doc.orgUserId,
         isActive: doc.isActive,
         isDeleted: doc.isDeleted,
         code: doc.code,
@@ -77,6 +80,7 @@ export class TeacherMongoRepository
     const teacherData = {
       _id: teacher.id,
       userId: teacher.userId,
+      orgUserId: teacher.orgUserId,
       isActive: teacher.isActive,
       isDeleted: teacher.isDeleted,
       code: teacher.code,
@@ -94,6 +98,7 @@ export class TeacherMongoRepository
   async update(teacher: Teacher): Promise<Teacher> {
     await TeacherModel.findByIdAndUpdate(teacher.id, {
       userId: teacher.userId,
+      orgUserId: teacher.orgUserId,
       isActive: teacher.isActive,
       isDeleted: teacher.isDeleted,
       code: teacher.code,

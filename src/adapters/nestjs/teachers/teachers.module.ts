@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TeachersController } from './teachers.controller';
+import { UsersModule } from '../users/users.module';
 
 // Import Repositories
 import {
@@ -14,9 +15,14 @@ import {
 } from '@/adapters/repositories';
 
 // Import Use Cases
-import { GetTeachersUseCase, AddTeacherUseCase } from '@/application/use-cases';
+import {
+  GetTeachersUseCase,
+  AddTeacherUseCase,
+  AddUserUseCase,
+} from '@/application/use-cases';
 
 @Module({
+  imports: [UsersModule],
   controllers: [TeachersController],
   providers: [
     {
@@ -37,8 +43,9 @@ import { GetTeachersUseCase, AddTeacherUseCase } from '@/application/use-cases';
       useFactory: (
         teacherRepo: ITeacherRepository,
         userRepo: IUserRepository,
-      ) => new AddTeacherUseCase(teacherRepo, userRepo),
-      inject: ['ITeacherRepository', 'IUserRepository'],
+        addUserUseCase: AddUserUseCase,
+      ) => new AddTeacherUseCase(teacherRepo, userRepo, addUserUseCase),
+      inject: ['ITeacherRepository', 'IUserRepository', AddUserUseCase],
     },
     { provide: 'IUserRepository', useClass: UserRepository },
     { provide: 'ITeacherRepository', useClass: TeacherRepository },

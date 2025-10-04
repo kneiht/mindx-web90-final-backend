@@ -28,21 +28,26 @@ export interface GetTeachersResponse {
 }
 
 // Define the use case
-export class GetTeachersUseCase implements IUseCase<void> {
+export class GetTeachersUseCase implements IUseCase<string> {
   constructor(
     private teacherRepository: ITeacherRepository,
     private userRepository: IUserRepository,
     private teacherPositionRepository: ITeacherPositionRepository,
   ) {}
 
-  async execute(): Promise<UseCaseReponse<GetTeachersResponse[]>> {
+  async execute(
+    orgUserId: string,
+  ): Promise<UseCaseReponse<GetTeachersResponse[]>> {
     try {
-      // Fetch all teachers
+      // Fetch all teachers for the org
       const teachers = await this.teacherRepository.findAll();
+      const filteredTeachers = teachers.filter(
+        (t) => t.orgUserId && t.orgUserId === orgUserId,
+      );
 
       const responses: GetTeachersResponse[] = [];
 
-      for (const teacher of teachers) {
+      for (const teacher of filteredTeachers) {
         // Fetch user
         const user = await this.userRepository.findById(teacher.userId);
         if (!user) continue; // Skip if user not found
