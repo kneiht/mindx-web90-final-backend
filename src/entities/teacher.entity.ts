@@ -7,7 +7,6 @@ import {
   IsOptional,
   IsString,
   IsUUID,
-  MinLength,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { BaseEntity } from './base.entity';
@@ -49,22 +48,18 @@ export class CreateTeacherDto {
   isActive?: boolean;
 
   @IsOptional()
-  @IsString()
-  @MinLength(10)
-  code?: string;
-
-  @IsOptional()
   @IsDate()
   @Type(() => Date)
   startDate?: Date;
 
   @IsOptional()
   @IsDate()
+  @Type(() => Date)
   endDate?: Date;
 
   @IsOptional()
   @IsArray()
-  @IsUUID('4', { each: true })
+  @IsUUID(undefined, { each: true })
   teacherPositions?: string[];
 
   @IsOptional()
@@ -87,7 +82,6 @@ export class HydrateTeacherDto {
   isDeleted: boolean;
 
   @IsString()
-  @MinLength(10)
   code: string;
 
   @IsOptional()
@@ -100,7 +94,7 @@ export class HydrateTeacherDto {
   endDate?: Date;
 
   @IsArray()
-  @IsUUID('4', { each: true })
+  @IsUUID(undefined, { each: true })
   teacherPositions: string[];
 
   @IsArray()
@@ -123,22 +117,18 @@ export class UpdateTeacherDto {
   isActive?: boolean;
 
   @IsOptional()
-  @IsString()
-  @MinLength(10)
-  code?: string;
-
-  @IsOptional()
   @IsDate()
   @Type(() => Date)
   startDate?: Date;
 
   @IsOptional()
   @IsDate()
+  @Type(() => Date)
   endDate?: Date;
 
   @IsOptional()
   @IsArray()
-  @IsUUID('4', { each: true })
+  @IsUUID(undefined, { each: true })
   teacherPositions?: string[];
 
   @IsOptional()
@@ -158,7 +148,6 @@ export class Teacher extends BaseEntity {
   public isDeleted: boolean;
 
   @IsString()
-  @MinLength(10)
   public code: string;
 
   @IsOptional()
@@ -170,7 +159,7 @@ export class Teacher extends BaseEntity {
   public endDate?: Date;
 
   @IsArray()
-  @IsUUID('4', { each: true })
+  @IsUUID(undefined, { each: true })
   public teacherPositions: string[];
 
   @IsArray()
@@ -212,10 +201,8 @@ export class Teacher extends BaseEntity {
       isDeleted: false,
       teacherPositions: props.teacherPositions ?? [],
       degrees: props.degrees ?? [],
-      // Generate random 10-digit code if not provided
-      code:
-        props.code ??
-        Math.floor(1000000000 + Math.random() * 9000000000).toString(),
+      // Generate epoch time (milliseconds) code
+      code: Date.now().toString(),
     };
     return new Teacher(teacherProps);
   }
